@@ -29,15 +29,15 @@ color mydarkblue  = color(0,144,128);
 
 void setup() {
   size(900, 620); // size of the user interface window
-  //println(Serial.list()); // prints the active COM-port list
+  println(Serial.list()); // prints the active COM-port list
   //String arduinoPort = Serial.list()[0]; //COM3
   //String arduinoPort = Serial.list()[1]; //COM5
-  //String arduinoPort = Serial.list()[2]; //COM6
-  String arduinoPort = Serial.list()[4];
-  //println(arduinoPort);
+  String arduinoPort = Serial.list()[2]; //COM6
+  //String arduinoPort = Serial.list()[3];
+  println(arduinoPort);
   
   port = new Serial(this, arduinoPort, 115200);
-  //port = new Serial(this,"/dev/cu.usbmodem1413101", 115200);
+  
   //fill(0);
   //size(900, 610); // size of the user interface window
   rect(80, 40, 790, 540);  // Draw the graph window
