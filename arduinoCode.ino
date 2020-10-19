@@ -1,7 +1,17 @@
 /************************************************************
-* File: _jobb3m.ino
-* Author: Jörgen Stegeby
+* File: arduinoCode.ino
+* Version 2.1
+* Date 20-10-19
+*
+* Dependent libraries: SparkFun TMP102 Arduino Library version 1.1.0
+* 
+*
+* Original author: Jörgen Stegeby
 * Date: 2014-10-03
+*
+* Contributing authors:
+* Javier Burges - Mid Sweden University
+* Olof Björkqvist - Mid Sweden University
 *
 * Det här Arduino programmet kontrollerar temperaturen i ett hus
 * med två rum i två våningar. Bottenvåningen värms med ett 200W
@@ -39,9 +49,9 @@
 #define delaytime 1000
 
 // initierar variabler - these are expained when initilized below
-TMP102 sensor0(0x48); // Initialize sensor at I2C address 0x48
-TMP102 sensor1(0x49); // Second sensor initialization
-TMP102 sensor2(0x4A); // third sensor initialization
+TMP102 sensor0; // Initialize sensor at I2C address 0x48
+TMP102 sensor1; // Second sensor initialization
+TMP102 sensor2; // third sensor initialization
   int  val, state1, state2, state3, ctrl, pwmvalue, comp;
   float temp1, temp2, t1b, t2b, diff1, diff2, t1min, t2min, tempext;
   int temp1p, temp2p, t1bp, t2bp, diff1p, diff2p, t1minp, t2minp;
@@ -63,8 +73,9 @@ double kd = 0.2;
 
 // Setup körs en gång vid start och när man trycker RESET
 void setup() {
-  // initierar seriekommunikation till 9600 bits per sekund
+  // initierar seriekommunikation till 115200 bits per sekund
   Serial.begin(115200);
+  Wire.begin(); //Join I2C Bus
   pinMode(LED5, OUTPUT); // sätter pinne 12 till OUTPUT
 
   t1b = 30;   // börvärdestemperatur för under rummet 35C
@@ -86,8 +97,7 @@ void setup() {
 ////// TEMPERATURE SENSORS ////////////
 ///////////////////////////////////////
 
-  sensor0.begin();  // Join I2C bus
-  
+  sensor0.begin();  // Join I2C bus 8
   // Initialize sensor0 settings
   // These settings are saved in the sensor, even if it loses power
   
@@ -118,8 +128,9 @@ void setup() {
   sensor0.setLowTempC(0); // set T_LOW in C
 
 
-  ///////////////////
-  sensor1.begin();  // Join I2C bus
+///////////////////
+
+  sensor1.begin(0x49,Wire);  // Join I2C bus
   
   // Initialize sensor1 settings
   // These settings are saved in the sensor, even if it loses power
@@ -150,8 +161,9 @@ void setup() {
   //sensor0.setLowTempF(84.0);  // set T_LOW in F
   sensor1.setLowTempC(0); // set T_LOW in C
 
-  ///////////////////
-  sensor1.begin();  // Join I2C bus
+///////////////////
+
+  sensor2.begin(0x4A,Wire);  // Join I2C bus
   
   // Initialize sensor2 settings
   // These settings are saved in the sensor, even if it loses power
