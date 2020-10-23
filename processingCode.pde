@@ -30,7 +30,7 @@ color mydarkblue  = color(0,144,128);
 void setup() {
   size(900, 620); // size of the user interface window
   println(Serial.list()); // prints the active COM-port list
-  String arduinoPort = Serial.list()[1]; //COM3
+  String arduinoPort = Serial.list()[0]; //COM3
   //String arduinoPort = Serial.list()[1]; //COM5
   //String arduinoPort = Serial.list()[2]; //COM6
   //String arduinoPort = Serial.list()[3];
